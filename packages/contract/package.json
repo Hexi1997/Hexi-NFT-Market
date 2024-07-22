@@ -2,19 +2,24 @@
   "name": "contract",
   "scripts": {
     "compile": "npx hardhat compile",
-    "test": "npx hardhat test"
+    "test": "npx hardhat test",
+    "test:myToken": "npx hardhat run scripts/testMyToken.ts"
   },
   "devDependencies": {
-    "@nomicfoundation/hardhat-ignition": "^0.15.5",
+    "@nomicfoundation/hardhat-ignition": "0.15.5",
+    "@nomicfoundation/hardhat-toolbox": "5.0.0",
     "@nomicfoundation/hardhat-toolbox-viem": "3.0.0",
-    "@types/mocha": "^10.0.7",
-    "@types/node": "^20.14.11",
+    "@nomicfoundation/hardhat-viem": "2.0.3",
+    "@types/chai": "4.3.7",
+    "@types/chai-as-promised": "7.1.1",
+    "@types/mocha": "10.0.7",
+    "@types/node": "20.14.11",
+    "chai": "4.3.7",
+    "chai-as-promised": "7.1.1",
     "hardhat": "2.22.6",
-    "mocha": "^10.7.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.5.3",
-    "viem": "^2.17.9",
-    "@types/chai": "4",
-    "chai": "4"
+    "mocha": "10.7.0",
+    "ts-node": "10.9.2",
+    "typescript": "5.5.3",
+    "viem": "2.17.9"
   }
 }

@@ -5,6 +5,7 @@ import {
 import { expect } from "chai";
 import hre from "hardhat";
 import { getAddress, parseGwei } from "viem";
+import 'chai-as-promised'; //解决rejectedWith ts报错
 
 describe("Lock", function () {
   // We define a fixture to reuse the same setup in every test.
@@ -127,7 +128,7 @@ describe("Lock", function () {
         // get the withdrawal events in the latest block
         const withdrawalEvents = await lock.getEvents.Withdrawal();
         expect(withdrawalEvents).to.have.lengthOf(1);
-        expect(withdrawalEvents[0].args.amount).to.equal(lockedAmount);
+        expect((withdrawalEvents[0].args as Record<string, unknown>).amount).to.equal(lockedAmount);
       });
     });
   });
