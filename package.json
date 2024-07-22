@@ -1,0 +1,13 @@
+{
+  "name": "hexi-nft-market",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "contract:compile": "pnpm --filter contract compile",
+    "contract:test": "pnpm --filter contract test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
