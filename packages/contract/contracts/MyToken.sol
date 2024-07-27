@@ -2,18 +2,18 @@
 pragma solidity ^0.8.24;
 
 contract MyToken {
-  uint256 public totalSupply;
+    uint256 public totalSupply;
 
-  constructor(uint256 _initialSupply) {
-    totalSupply = _initialSupply;
-  }
+    constructor(uint256 _initialSupply) {
+        totalSupply = _initialSupply;
+    }
 
-  function increaseSupply(uint256 _amount) public {
-    require(_amount > 0, "Amount must be greater than 0");
-    totalSupply += _amount;
-  }
+    function increaseSupply(uint256 _amount) public {
+        require(_amount > 0, "Amount must be greater than 0");
+        totalSupply += _amount;
+    }
 
-  function getCurrentSupply() public view returns (uint256) {
-    return totalSupply;
-  }
+    function getCurrentSupply() public view returns (uint256) {
+        return totalSupply;
+    }
 }
