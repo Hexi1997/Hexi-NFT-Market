@@ -11,6 +11,21 @@ export function HomePage() {
     refreshListings();
   }, [refreshListings]);
 
+  if (listings.length === 0) {
+    return (
+      <div className="px-4 flex items-center justify-start h-[calc(100dvh_-_48px)] md:px-8">
+        <div className="max-w-lg mx-auto text-center">
+          <div className="pb-6">
+            <img src="/textLogo.png" width={150} className="mx-auto" />
+          </div>
+          <h3 className="text-gray-800 text-4xl font-semibold sm:text-5xl">
+            No listings now!
+          </h3>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="px-4 mt-4">
       <ul className="mb-10"></ul>
