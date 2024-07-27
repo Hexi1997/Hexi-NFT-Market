@@ -6,7 +6,9 @@ import { pinataConfigs } from "../pinataUtils";
 import { HexAddress } from "../../types/global";
 import { contractInfo } from "./contractInfo";
 
-const provider = new ethers.WebSocketProvider(rainbowKitConfig.websocketUrl);
+export const provider = new ethers.WebSocketProvider(
+  rainbowKitConfig.websocketUrl
+);
 
 export interface NFTItem {
   name: string;

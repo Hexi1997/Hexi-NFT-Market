@@ -34,6 +34,7 @@ async function main() {
 import { Address } from 'viem';
 
 export const contractInfo = {
+    deployAccount: "${accounts.deployer}",
     Market: {
       address: "${nftMarket.address}" as Address,
       abi: ${JSON.stringify(nftMarket.abi)} as const
@@ -51,7 +52,7 @@ export const contractInfo = {
       path.resolve(__dirname, "../../web/src/utils/contract/contractInfo.ts"),
       content
     );
-    console.log('Save deployed contracts info succeed!')
+    console.log("Save deployed contracts info succeed!");
   }
 }
 

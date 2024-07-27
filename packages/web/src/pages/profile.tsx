@@ -6,6 +6,7 @@ import {
   NFTItem,
   marketContractUtils,
   nftContractUtils,
+  provider,
 } from "../utils/contract/contractUtils";
 import { useAsyncFn, useClickAway } from "react-use";
 import { contractInfo } from "../utils/contract/contractInfo";
@@ -19,6 +20,7 @@ import { HexAddress } from "../types/global";
 import { toast } from "react-toastify";
 import { ItemCard } from "../components/ItemCard";
 import { useFTBalance } from "../utils/hooks/useFTBalance";
+import { ethers, parseEther } from "ethers";
 
 export function ProfilePage() {
   const { address } = useAccount();
@@ -126,10 +128,29 @@ export function ProfilePage() {
     refreshOwnNFTs,
   ]);
 
+  const [faucetResult, doFaucet] = useAsyncFn(async () => {
+    try {
+      const signer = new ethers.Wallet(contractInfo.deployAccount, provider);
+      const contract = new ethers.Contract(
+        contractInfo.Erc20Token.address,
+        contractInfo.Erc20Token.abi,
+        signer
+      );
+      const tx = await (contract as any).transfer(address, parseEther("10"));
+      await tx.wait();
+      console.log(tx);
+      refreshBalance();
+      toast.success("Faucet 10 HT succeed!");
+    } catch (e) {
+      console.error(e);
+      toast.error("Faucet failed!");
+    }
+  }, [address, refreshBalance]);
+
   return (
     <div className="px-4 mt-4">
       <ul className="mb-10">
-        <li className=" text-end">
+        <div className="flex items-center justify-end gap-x-1">
           Balance: {balance || "0.0"} {` `}
           <a
             href={`https://sepolia.etherscan.io/token/${contractInfo.Erc20Token.address}`}
@@ -138,7 +159,15 @@ export function ProfilePage() {
           >
             HT
           </a>
-        </li>
+          {address && (
+            <button
+              onClick={doFaucet}
+              className="bg-primaryColor rounded px-2 py-[2px] text-white text-xs"
+            >
+              {faucetResult.loading ? "Loading..." : "Faucet 10 HT"}
+            </button>
+          )}
+        </div>
       </ul>
       <div className="flex flex-wrap gap-4">
         {[...listings, ...ownNFTs].map((item, index) => (
