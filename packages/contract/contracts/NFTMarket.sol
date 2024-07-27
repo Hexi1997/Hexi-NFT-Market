@@ -32,6 +32,12 @@ contract NFTMarket is Ownable {
         uint256 tokenId,
         uint256 price
     );
+    event NFTDelisted(
+        uint256 indexed listingId,
+        address indexed seller,
+        address indexed nftContract,
+        uint256 tokenId
+    );
 
     constructor() Ownable(msg.sender){}
 
@@ -99,6 +105,21 @@ contract NFTMarket is Ownable {
             listing.price
         );
 
+        delete listings[listingId];
+    }
+
+    function cancelListing(uint256 listingId) public {
+        Listing storage listing = listings[listingId];
+        
+        require(listing.price > 0, "Listing does not exist");
+        require(listing.seller == msg.sender, "Caller is not the seller");
+        // Transfer NFT back to the seller
+        IERC721(listing.nftContract).transferFrom(
+            address(this),
+            msg.sender,
+            listing.tokenId
+        );
+        emit NFTDelisted(listingId, msg.sender, listing.nftContract, listing.tokenId);
         delete listings[listingId];
     }
 
