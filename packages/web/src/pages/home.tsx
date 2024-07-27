@@ -16,9 +16,12 @@ export function HomePage() {
       <div className="px-4 flex items-center justify-start h-[calc(100dvh_-_48px)] md:px-8">
         <div className="max-w-lg mx-auto text-center">
           <div className="pb-6">
-            <img src="/textLogo.png" width={150} className="mx-auto" />
+            <img
+              src="/no-data.svg"
+              className="mx-auto w-[200px] sm:w-[300px]"
+            />
           </div>
-          <h3 className="text-gray-800 text-4xl font-semibold sm:text-5xl">
+          <h3 className="text-gray-800 text-2xl sm:text-4xl font-semibold">
             No listings now!
           </h3>
         </div>
