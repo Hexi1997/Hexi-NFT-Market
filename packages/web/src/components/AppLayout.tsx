@@ -13,7 +13,7 @@ export function AppLayout() {
             <ul className="flex items-center w-full justify-between sm:justify-end gap-x-4 pr-4 sm:pr-10 sm:gap-x-10">
               <li>
                 <Link to="/" className="hover:text-primaryColor duration-200">
-                  Home
+                  Marketplace
                 </Link>
               </li>
               <li>
@@ -35,7 +35,9 @@ export function AppLayout() {
             </ul>
           </nav>
         </div>
-        <ConnectButton showBalance={false} />
+        <div className="pt-1">
+          <ConnectButton showBalance={false} />
+        </div>
       </header>
       <main>
         <Outlet />

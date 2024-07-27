@@ -82,11 +82,14 @@ export function ProfilePage() {
       });
 
       if (!isApproval) {
-        await writeContract(wagmiConfig, {
+        const approvalHash = await writeContract(wagmiConfig, {
           address: contractInfo.Erc721Token.address,
           abi: contractInfo.Erc721Token.abi,
           functionName: "setApprovalForAll",
           args: [contractInfo.Market.address, true],
+        });
+        await waitForTransactionReceipt(wagmiConfig, {
+          hash: approvalHash,
         });
       }
 

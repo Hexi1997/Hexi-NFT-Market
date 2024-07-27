@@ -91,8 +91,8 @@ class NFTContractUtils {
         });
       })
     );
-    const myTokenIds = allTokenIds.filter(
-      (_, index) => ownerList[index] === address
+    const myTokenIds = allTokenIds.filter((_, index) =>
+      [address, address.toLowerCase()].includes(ownerList[index])
     );
     return myTokenIds;
   }
@@ -212,7 +212,9 @@ class MarketContractUtils {
     if (!this._contract) return [];
     const allListings = await this.getAllListings();
     const listings = allListings.filter(
-      (item) => item.nftContract === contract && item.seller === address
+      (item) =>
+        item.nftContract.toLowerCase() === contract.toLowerCase() &&
+        item.seller.toLowerCase() === address.toLowerCase()
     );
     return await Promise.all(
       listings.map((item) => {

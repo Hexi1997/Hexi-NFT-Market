@@ -83,17 +83,43 @@ export function ItemCard(props: ItemCardProps) {
     }
   }, [data, address, balance, refreshBalance]);
 
+  const [cancelListResult, handleCancelList] = useAsyncFn(async () => {
+    const listItem = data as ListItem;
+    try {
+      const cancelListTx = await writeContract(wagmiConfig, {
+        address: contractInfo.Market.address,
+        abi: contractInfo.Market.abi,
+        functionName: "cancelListing",
+        args: [BigInt(listItem.listId)],
+      });
+      await waitForTransactionReceipt(wagmiConfig, {
+        hash: cancelListTx,
+      });
+      refreshData && refreshData();
+      toast.success("Canceled!");
+    } catch (e) {
+      console.error(e);
+      toast.error(`Failed to cancel current list! ${JSON.stringify(e)}`);
+    }
+  }, [data, refreshData]);
+
   const buttonText = useMemo(() => {
     if (!address) return "";
-    if (buyResult.loading) {
+    if (buyResult.loading || cancelListResult.loading) {
       return "Loading";
     }
     if (isMyItem) {
-      return isOnSale ? "" : "List";
+      return isOnSale ? "Cancel List" : "List";
     } else {
       return isOnSale ? "Buy" : "";
     }
-  }, [address, buyResult.loading, isMyItem, isOnSale]);
+  }, [
+    address,
+    buyResult.loading,
+    cancelListResult.loading,
+    isMyItem,
+    isOnSale,
+  ]);
 
   return (
     <div className="rounded-lg relative overflow-hidden group w-[calc(100vw_-_32px)] sm:w-[260px] duration-200 cursor-pointer shadow-lg hover:shadow-xl">
@@ -126,9 +152,8 @@ export function ItemCard(props: ItemCardProps) {
           onClick={() => {
             if (isMyItem) {
               if (isOnSale) {
-                return;
+                handleCancelList();
               } else {
-                console.log("do list");
                 showListModal && showListModal();
               }
             } else {
