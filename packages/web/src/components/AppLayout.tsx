@@ -40,6 +40,14 @@ export function AppLayout() {
         </div>
       </header>
       <main>
+        <a
+          className="fixed left-2 bottom-2 flex items-center gap-x-1"
+          href="https://github.com/Hexi1997/Hexi-NFT-Market"
+          target="_blank"
+        >
+          <img src="/github.png" width={16} />
+          Hexi1997/Hexi-NFT-Market
+        </a>
         <Outlet />
       </main>
     </>
